@@ -1,0 +1,41 @@
+.main{
+    position: absolute;
+    top: 40%;
+    left: 10%;
+    height: 40%;
+    width: 80%;
+    margin: -20% auto;
+    text-align: center;
+}
+
+.buttons{
+    text-align: center;
+    height: 70%;
+    width: 80%;
+    margin: 5% auto;
+}
+
+.button{
+    border:1px solid #020202;
+    background-color:#ffc477;
+	border-radius:7px;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	display:inline-block;
+    height: 80%;
+    width: 40%;
+    top: 50%;
+    font-size: 100%;
+    margin: 5% auto;
+}
+
+.to_menu{
+    width: 80%;
+    margin: auto;
+}
+
+.a{
+    background-color: aquamarine;
+}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset = "UTF-8">
+      <title>Audio and Video</title>
+      <link rel = "stylesheet" href="webcam.css">
+   </head>
+   
+   <body>
+      <div class = "webcam">
+         <video id = cam class = cam autoplay width=100%></video>
+         <canvas id = "canvas"></canvas>
+         <button class = "capture" onclick="capture()">사진 촬영하기</button>
+         <button class = "download" onclick="ok()">촬영 완료</a>
+         <button class = "to_main" onclick="location.href='../index.html'">back</button>
+         <script src="../scripts/webcam.js"></script>
+      </div>
+   </body>
+</html>
