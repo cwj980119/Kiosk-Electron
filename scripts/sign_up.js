@@ -17,6 +17,7 @@ window.onload = function(){
         if(password == confirmpassword && password!=""){
             console.log(password);
             document.querySelector('.upper-frame').style.transform = 'translate(0, -90vh)'
+            cam_on();
         }
         else {
             console.log('비밀번호가 일치하지 않습니다.')
@@ -36,5 +37,3 @@ function cam_on(){
         video.autoplay = true
     }, (e) => {})
 }
-
-cam_on();
