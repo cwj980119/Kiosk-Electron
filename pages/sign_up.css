@@ -5,34 +5,32 @@ body * {
 }
 
 body {
-  background: linear-gradient(
-      rgba(246, 247, 249, 0.8),
-      rgba(246, 247, 249, 0.8)
-    ),
-    url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/sky-clouds-cloudy-mountain.jpg)
-      no-repeat center center fixed;
+  background:  rgba(246, 247, 249, 0.8);
   background-size: cover;
-  width: 100%;
-  height: 100%;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  width: 100vw;
+  height: 100vh;
+  margin: 0%;
   text-align: center;
+  overflow: hidden;
 }
 
 .container {
-  width: 90%;
-  height: 90%;
-  margin-left: 5%;
+  width: 90vw;
+  height: 90vh;
+  margin-left: 5vw;
   margin-top: 5%;
   overflow: hidden;
 }
 
+.upper-frame{
+  transform: translate(0, 0vh);
+  transition: all 0.5s;
+}
+
 .frame {
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(rgba(35, 43, 85, 0.75), rgba(35, 43, 85, 0.95)),
-    url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/clouds-cloudy-forest-mountain.jpg)
-      no-repeat center center;
+  height: 90vh;
+  width: 90vw;
+  background: rgba(35, 43, 85, 0.95);
   background-size: cover;
   margin-left: auto;
   margin-right: auto;
@@ -73,12 +71,10 @@ body {
     text-align: center;
 }
 
-.cam{
-    height: 90%;
-    width: 90%;
-    background: linear-gradient(rgba(35, 43, 85, 0.75), rgba(35, 43, 85, 0.95)),
-      url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/clouds-cloudy-forest-mountain.jpg)
-        no-repeat center center;
+.webcam{
+    height: 90vh;
+    width: 90vw;
+    background: rgba(35, 43, 85, 0.95);
     background-size: cover;
     margin-left: auto;
     margin-right: auto;
@@ -88,6 +84,10 @@ body {
     overflow: hidden;
     transition: all 0.5s ease;
     text-align: center;
+}
+
+.camform{
+
 }
 
 .nav-up {
@@ -418,43 +418,6 @@ a.btn-signin:hover {
 
 .welcome-left {
   transform: translateY(-780px);
-  opacity: 1;
-}
-
-.cover-photo {
-  height: 150px;
-  position: relative;
-  left: 0px;
-  top: -900px;
-  background: linear-gradient(rgba(35, 43, 85, 0.75), rgba(35, 43, 85, 0.95)),
-    url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/landscape-nature-man-person.jpeg);
-  background-size: cover;
-  opacity: 0;
-  transition: all 1.5s ease 0.55s;
-}
-
-.cover-photo-down {
-  top: -575px;
-  opacity: 1;
-}
-
-.profile-photo {
-  height: 125px;
-  width: 125px;
-  position: relative;
-  border-radius: 70px;
-  left: 155px;
-  top: -1000px;
-  background: url(https://dl.dropboxusercontent.com/u/22006283/preview/codepen/nature-water-rocks-hiking.jpg);
-  background-size: 100% 135%;
-  background-position: 100% 100%;
-  opacity: 0;
-  transition: top 1.5s ease 0.35s, opacity 0.75s ease 0.5s;
-  border: solid 3px #ffffff;
-}
-
-.profile-photo-down {
-  top: -636px;
   opacity: 1;
 }
 

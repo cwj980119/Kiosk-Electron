@@ -9,37 +9,41 @@
 </head>
 <body>
     <div class="container">
-        <div class="frame">
-            <div class="nav">
-                <ul class= "links">
-                    <li class="signup-active"><a class="btn">회원가입 </a></li>
-                </ul>
+        <div class="upper-frame">
+            <div class="frame">
+                <div class="nav">
+                    <ul class= "links">
+                        <li class="signup-active"><a class="btn">회원가입 </a></li>
+                    </ul>
+                </div>
+                <div class="sform">
+                    <form class="form-signup" action="" method="post" name="form">
+                        <label for="fullname">이름</label>
+                        <input class="form-styling" id="fullname" type="text" name="fullname" placeholder="" />
+                        <label for="password">비밀번호</label>
+                        <input class="form-styling" id="password" type="password" name="password" placeholder="" />
+                        <label for="confirmpassword">비밀번호 확인</label>
+                        <input class="form-styling" id="confirmpassword" type="password" name="confirmpassword" placeholder="" />
+                        <label for="birthday">생년월일</label>
+                        <input class="form-styling" id="birthday" type="date" name="birthday" placeholder="" style="text-align: center;"/>
+                        
+                        <a ng-click="checked = !checked" class="btn-signup">확인</a>
+                    </form>
+                </div>
+                <div class="to_main">
+                    <a href="./main.html">취소</a>
+                </div>
+                <div>
+                    <h1 class="welcome">Welcome, Chris</h1>
+                </div>
             </div>
-            <div class="sform">
-                <form class="form-signup" action="" method="post" name="form">
-                    <label for="fullname">이름</label>
-                    <input class="form-styling" type="text" name="fullname" placeholder="" />
-                    <label for="password">비밀번호</label>
-                    <input class="form-styling" type="password" name="password" placeholder="" />
-                    <label for="confirmpassword">비밀번호 확인</label>
-                    <input class="form-styling" type="password" name="confirmpassword" placeholder="" />
-                    <label for="birthday">생년월일</label>
-                    <input class="form-styling" type="date" name="birthday" placeholder="" style="text-align: center;"/>
+            <div class ="webcam">
+                <h1>캠 페이지</h1>
+                <a class="camform">
+                    <video id = cam class = cam autoplay width=100%></video>
                     
-                    <a ng-click="checked = !checked" class="btn-signup">확인</a>
-                </form>
+                </a>
             </div>
-            <div class="to_main">
-                <a href="./main.html">취소</a>
-            </div>
-            <div>
-                <div class="cover-photo"></div>
-                <div class="profile-photo"></div>
-                <h1 class="welcome">Welcome, Chris</h1>
-            </div>
-        </div>
-        <div class ="cam">
-            <h1>캠 페이지</h1>
         </div>
 
         <a id="refresh" value="Refresh" onClick="history.go()">
