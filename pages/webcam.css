@@ -1,5 +1,6 @@
 .webcam{
     height: 80%;
+    width: 400px;
     margin: auto;
     text-align: center;
 }
