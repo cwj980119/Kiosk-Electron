@@ -22,10 +22,24 @@ body {
   overflow: hidden;
 }
 
+.over-frame{
+  background-color: white;
+  opacity: 30%;
+  display: none;
+  left: 0vw;
+  top: 0;
+  position: absolute;
+  width: 90vw;
+  height: 90vh;
+  margin-left: 5vw;
+  margin-top: 5%;
+}
+
 .upper-frame{
   transform: translate(0, -90vh);
   transition: all 0.5s;
 }
+
 
 .frame {
   height: 90vh;
@@ -519,11 +533,16 @@ a.btn-goback:hover {
 
 .to_main a{
     color:#ffffff ;
-    text-decoration: no;
+    text-decoration: none;
 }
 
+.start-capture{
+  text-decoration: none;
+  color:#9bd610
+}
 
 .numb{
+  display: block;
   position: absolute;
   top: 40%;
   left: 50%;

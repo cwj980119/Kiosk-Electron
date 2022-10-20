@@ -47,20 +47,36 @@ function cam_on(){
     }, (e) => {})
 }
 
-async function cnt_down(){
-    let counter = 3;
-    setInterval(()=>{
-        if(counter == 0){
-            clearInterval();
-            numb.style.display = 'none';
-        }
-        else{
-            counter-=1;
-            if(counter==0){
-                numb.textContent = '찰칵';
+function cnt_down(){
+    numb = document.querySelector(".numb");
+    over_frame = document.querySelector(".over-frame");
+    return new Promise(function(resolve, reject){
+        over_frame.style.display = 'block';
+        let counter = 3;
+        numb.textContent = counter;
+        let interval = setInterval(()=>{
+            if(counter == 0){
+                clearInterval(interval);
+                over_frame.style.display = 'none';
+                resolve(true);
             }
-            else numb.textContent = counter;
-
-        }
-    }, 1000)
+            else{
+                counter-=1;
+                if(counter==0){
+                    numb.textContent = '찰칵';
+                }
+                else numb.textContent = counter;
+    
+            }
+        }, 1000)
+    })
 }
+
+async function test(){
+    for(var i = 0; i<10; i++){
+        var check = await cnt_down();
+        console.log(i, 'promise done');
+    }
+}
+
+test();
