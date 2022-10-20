@@ -20,6 +20,11 @@ ipcMain.on('s3_upload', (event, argument) => {
 
 })
 
+ipcMain.on('sign_up',(event, argument)=>{
+  
+  
+})
+
 
 const createWindow = () => {
     const win = new BrowserWindow({

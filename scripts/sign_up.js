@@ -1,3 +1,4 @@
+//const { ipcRenderer } = require('electron')
 var fullname;
 var password;
 var confirmpassword;
@@ -17,13 +18,19 @@ window.onload = function(){
         confirmpassword = document.getElementById('confirmpassword').value;
         birthday = document.getElementById('birthday').value;
         if(password == confirmpassword && password!=""){
-            console.log(password);
+            console.log(document.getElementById('camname').innerText);
+            document.getElementById('camname').innerText = fullname +' 님';
             document.querySelector('.upper-frame').style.transform = 'translate(0, -90vh)'
             cam_on();
         }
         else {
             console.log('비밀번호가 일치하지 않습니다.')
         }
+    })
+
+    document.querySelector('.cam-back').addEventListener('click',function(){
+        document.querySelector('.upper-frame').style.transform = 'translate(0, 0vh)'
+
     })
 }
 
@@ -40,7 +47,7 @@ function cam_on(){
     }, (e) => {})
 }
 
-function cnt_down(){
+async function cnt_down(){
     let counter = 3;
     setInterval(()=>{
         if(counter == 0){
@@ -57,5 +64,3 @@ function cnt_down(){
         }
     }, 1000)
 }
-
-cnt_down()
