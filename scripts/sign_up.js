@@ -7,8 +7,10 @@ var birthday;
 
 var video = null;
 var canvas = null;
+var numb;
 
 window.onload = function(){
+    numb = document.querySelector(".numb");
     document.querySelector('.btn-signup').addEventListener('click',function(){
         fullname = document.getElementById('fullname').value;
         password = document.getElementById('password').value;
@@ -37,3 +39,23 @@ function cam_on(){
         video.autoplay = true
     }, (e) => {})
 }
+
+function cnt_down(){
+    let counter = 3;
+    setInterval(()=>{
+        if(counter == 0){
+            clearInterval();
+            numb.style.display = 'none';
+        }
+        else{
+            counter-=1;
+            if(counter==0){
+                numb.textContent = '찰칵';
+            }
+            else numb.textContent = counter;
+
+        }
+    }, 1000)
+}
+
+cnt_down()
