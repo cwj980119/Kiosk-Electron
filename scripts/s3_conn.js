@@ -22,7 +22,7 @@ var param = {
 }
 
 s3_conn.upload = function(img){
-    console.log(img);
+    console.log('./' + img);
     param.Key = 'image/img.jpg';
     param.Body = fs.createReadStream(img);
     s3.upload(param, function(err, data){
@@ -32,7 +32,7 @@ s3_conn.upload = function(img){
         console.log(data.Location);
         let loc = data.Location
         const options = {
-            uri: `http://127.0.0.1:5000/fileDownload`,
+            uri: process.env.FLASK + `fileDownload`,
             qs:{
                 object_name: 'image/img.jpg'
                 //page: loc
@@ -51,9 +51,15 @@ s3_conn.upload = function(img){
     });
 }
 
+
 s3_conn.check = function(img){
-    param.Key = 'check.jpg';
+    console.log(img)
+    param.Key = 'image/check.jpg';
     param.Body = fs.createReadStream(img);
+    console.log(param.Bucket);
+    console.log(param.ACL)
+    console.log(param.ContentType)
+    console.log(param.Key)
     s3.upload(param, function(err, data){
         if(err){
             console.log(err);
@@ -71,13 +77,42 @@ s3_conn.check = function(img){
             console.log(body)
             })
         try {
-            fs.unlinkSync(img)
+            //fs.unlinkSync(img)
             //file removed
         } catch(err) {
                 console.error(err)
         }
     })
 }
+
+/*
+s3_conn.upload = function(target_img, s3_loc, api_name){
+    param.Key = s3_loc;
+    param.Body = fs.createReadStream(target_img);
+    s3.upload(param, function(err, data){
+        if(err){
+            console.log(err);
+        }
+        let loc = data.Location
+        const options = {
+            uri: process.env.FLASK + api_name,
+            qs:{
+                object_name: s3_loc
+                //page: loc
+            }
+        }          
+        r = request(options,function(err,reponse,body){
+                console.log(body)
+            })
+        try {
+            fs.unlinkSync(target_img)
+            //file removed
+        } catch(err) {
+                console.error(err)
+        }
+    })
+}
+*/
 
 
 module.exports = s3_conn
