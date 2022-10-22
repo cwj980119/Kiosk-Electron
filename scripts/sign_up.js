@@ -1,4 +1,4 @@
-//const { ipcRenderer } = require('electron')
+const { ipcRenderer } = require('electron')
 var fullname;
 var password;
 var confirmpassword;
@@ -73,7 +73,7 @@ function cnt_down(){
 }
 
 async function test(){
-    for(var i = 0; i<10; i++){
+    for(var i = 0; i<1; i++){
         var check = await cnt_down();
         console.log(i, 'promise done');
     }

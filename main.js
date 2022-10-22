@@ -22,8 +22,13 @@ ipcMain.on('s3_upload', (event, argument) => {
 
 ipcMain.on('sign_up',(event, argument)=>{
   
-  
+
 })
+
+ipcMain.on('faceCheck',(event, argument)=>{
+  var temp = require("./scripts/s3_conn.js");
+  temp.check(argument)
+;})
 
 
 const createWindow = () => {

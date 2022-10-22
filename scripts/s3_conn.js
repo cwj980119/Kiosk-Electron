@@ -23,6 +23,7 @@ var param = {
 
 s3_conn.upload = function(img){
     console.log(img);
+    param.Key = 'image/img.jpg';
     param.Body = fs.createReadStream(img);
     s3.upload(param, function(err, data){
         if(err) {
@@ -40,9 +41,6 @@ s3_conn.upload = function(img){
           
         r = request(options,function(err,reponse,body){
             console.log(body)
-            //a = JSON.parse(body);
-
-            //return a.lang;
             })
         try {
             fs.unlinkSync(img)
@@ -51,6 +49,34 @@ s3_conn.upload = function(img){
                 console.error(err)
         }
     });
+}
+
+s3_conn.check = function(img){
+    param.Key = 'check.jpg';
+    param.Body = fs.createReadStream(img);
+    s3.upload(param, function(err, data){
+        if(err){
+            console.log(err);
+        }
+        let loc = data.Location
+        const options = {
+            uri: `http://127.0.0.1:5000/faceCheck`,
+            qs:{
+                object_name: 'check.jpg'
+                //page: loc
+            }
+        }
+          
+        r = request(options,function(err,reponse,body){
+            console.log(body)
+            })
+        try {
+            fs.unlinkSync(img)
+            //file removed
+        } catch(err) {
+                console.error(err)
+        }
+    })
 }
 
 
