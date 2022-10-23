@@ -3,11 +3,13 @@ const {ipcMain} = require('electron')
 const url = require('url')
 const request = require('request')
 
-ipcMain.on('api_call' ,(event, img) => {
+ipcMain.on('api_call' ,async (event, img, s3_loc, api_name) => {
   console.log('api call')
   var t = require("./scripts/s3_conn.js")
   console.log(img)
-  t.upload(img);
+  result = await t.upload(img, s3_loc, api_name);
+  console.log('1', result);
+  event.sender.send('api_call_result', result); 
   // const options = {
   //   uri: "http://127.0.0.1:5000/home/${}"
   // }
@@ -26,12 +28,12 @@ ipcMain.on('sign_up',(event, argument)=>{
 
 })
 
-ipcMain.on('faceCheck',(event, argument)=>{
+ipcMain.on('faceCheck',async (event, argument)=>{
   console.log('fc')
   var img = argument;
   console.log(img)
   var temp = require("./scripts/s3_conn.js");
-  temp.check(img)
+  await temp.check(img)
 ;})
 
 

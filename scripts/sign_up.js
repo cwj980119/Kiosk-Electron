@@ -10,6 +10,7 @@ var birthday;
 var video = null;
 var canvas = null;
 var numb;
+var over_frame;
 
 window.onload = function(){
     numb = document.querySelector(".numb");
@@ -62,7 +63,7 @@ function capture(){
         var dataURL = canvas.toDataURL('image/png');
         filePath = 'img'+ rnd +'.jpg'
         const base64Data = dataURL.replace(/^data:image\/png;base64,/, "");
-        fs.writeFile(filePath, base64Data, 'base64', function (err) {
+        fs.writeFileSync(filePath, base64Data, 'base64', function (err) {
             console.log(err);
         });
         console.log(filePath)
@@ -83,13 +84,13 @@ function cnt_down(){
         let interval = setInterval(()=>{
             if(counter == 0){
                 clearInterval(interval);
-                over_frame.style.display = 'none';
+                //over_frame.style.display = 'none';
                 resolve(true);
             }
             else{
                 counter-=1;
                 if(counter==0){
-                    numb.textContent = '찰칵';
+                    numb.textContent = '확인중';
                 }
                 else numb.textContent = counter;
     
@@ -105,8 +106,23 @@ async function test(){
         filePath = await capture();
         console.log(filePath);
         console.log(i, 'capture done');
-        ipcRenderer.send('faceCheck', filePath);
+        ipcRenderer.send('api_call', filePath, 'image/check.jpg','faceCheck');
     }
 }
+
+ipcRenderer.on('api_call_result', (event, result)=>{
+    console.log('ok')
+    var number = JSON.parse(result)
+    console.log('2', number.result);
+    if(number.result == 0){
+        numb.textContent = '확인불가';
+    }
+    else if(number.result ==1){
+        over_frame.style.display = 'none'
+    }
+    else{
+        numb.textContent = '1명보다 많은 얼굴이 보입니다'
+    }
+})
 
 //test();
