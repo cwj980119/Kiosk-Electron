@@ -6,17 +6,9 @@ const request = require('request')
 ipcMain.on('api_call' ,async (event, img, s3_loc, api_name) => {
   console.log('api call')
   var t = require("./scripts/s3_conn.js")
-  console.log(img)
   result = await t.upload(img, s3_loc, api_name);
   console.log('1', result);
   event.sender.send('api_call_result', result); 
-  // const options = {
-  //   uri: "http://127.0.0.1:5000/home/${}"
-  // }
-  
-  // r = request(options,function(err,reponse,body){
-  //   console.log(body.lang)
-  // })
 })
 
 ipcMain.on('s3_upload', (event, argument) => {

@@ -1,5 +1,9 @@
 const { ipcRenderer } = require('electron')
 const fs = require('fs')
+
+const mysql = require('mysql')
+require('dotenv').config();
+
 var fullname;
 var password;
 var confirmpassword;
@@ -107,10 +111,7 @@ function cnt_down(){
 async function test(){
     for(var i = 0; i<1; i++){
         var check = await cnt_down();
-        console.log(i, 'promise done');
         filePath = await capture();
-        console.log(filePath);
-        console.log(i, 'capture done');
         ipcRenderer.send('api_call', filePath, 'image/check.jpg','faceCheck');
     }
 }
@@ -131,4 +132,22 @@ ipcRenderer.on('api_call_result', (event, result)=>{
     }
 })
 
-//test();
+function DB(){
+    var connection = mysql.createConnection({
+        host     : process.env.DB_HOST,
+        user     : process.env.DB_USERNAME,
+        password : process.env.DB_PASSWORD,
+        database : process.env.DB_DATABASE,
+    });
+
+    connection.connect();
+
+    connection.query('SELECT count(*) as num from sho', function (error, results, fields) {
+        if (error) throw error;
+        console.log('users: ', results[0].num);
+    });
+
+    connection.end();
+}
+
+DB();
