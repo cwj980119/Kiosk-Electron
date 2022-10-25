@@ -11,6 +11,7 @@ var video = null;
 var canvas = null;
 var numb;
 var over_frame;
+var loader;
 
 window.onload = function(){
     numb = document.querySelector(".numb");
@@ -78,7 +79,9 @@ function cnt_down(){
     return new Promise(function(resolve, reject){
         numb = document.querySelector(".numb");
         over_frame = document.querySelector(".over-frame");
+        loader = document.querySelector(".loader");
         over_frame.style.display = 'block';
+        numb.style.display = 'block';
         let counter = 3;
         numb.textContent = counter;
         let interval = setInterval(()=>{
@@ -90,7 +93,9 @@ function cnt_down(){
             else{
                 counter-=1;
                 if(counter==0){
-                    numb.textContent = '확인중';
+                    //numb.textContent = '확인중';
+                    numb.style.display = 'none';
+                    loader.style.display = 'block';
                 }
                 else numb.textContent = counter;
     
@@ -111,9 +116,10 @@ async function test(){
 }
 
 ipcRenderer.on('api_call_result', (event, result)=>{
-    console.log('ok')
+    console.log('api call result')
+    loader.style.display = 'none';
+    numb.style.display = 'block';
     var number = JSON.parse(result)
-    console.log('2', number.result);
     if(number.result == 0){
         numb.textContent = '확인불가';
     }
