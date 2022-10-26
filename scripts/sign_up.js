@@ -1,8 +1,7 @@
+const { count } = require('console');
 const { ipcRenderer } = require('electron')
 const fs = require('fs')
 
-const mysql = require('mysql')
-require('dotenv').config();
 
 var fullname;
 var password;
@@ -10,6 +9,8 @@ var confirmpassword;
 var phonenumber;
 var gender;
 var birthday;
+var id = 9999; //중복 저장방지 큰 값
+var image_num;
 
 var video = null;
 var canvas = null;
@@ -18,6 +19,11 @@ var over_frame;
 var loader;
 
 window.onload = function(){
+    loading_on();
+    var sql = 'select count(*) as num from sho'
+    db_result = ipcRenderer.sendSync('DB_call', sql)
+    id = db_result[0].num;
+    console.log(id);
     numb = document.querySelector(".numb");
     canvas = document.getElementById('canvas');
     document.querySelector('.btn-signup').addEventListener('click',function(){
@@ -38,8 +44,9 @@ window.onload = function(){
 
     document.querySelector('.cam-back').addEventListener('click',function(){
         document.querySelector('.upper-frame').style.transform = 'translate(0, 0vh)'
-
     })
+    loading_off();
+    over_frame.style.display = 'none';
 }
 
 function cam_on(){
@@ -56,7 +63,7 @@ function cam_on(){
 }
 
 function capture(){
-    return new Promise(function(resolve, reject){
+    return new Promise(async function(resolve, reject){
         canvas = document.getElementById('canvas');
         var context = canvas.getContext('2d');
         canvas.width = 800;
@@ -64,26 +71,46 @@ function capture(){
         context.translate(this.canvas.width,0);
         context.scale(-1, 1);
         context.drawImage(video, 0, 0, 800 , 600);
-        var rnd = Math.floor(Math.random() * 1000);
-        var dataURL = canvas.toDataURL('image/png');
-        filePath = 'img'+ rnd +'.jpg'
-        const base64Data = dataURL.replace(/^data:image\/png;base64,/, "");
-        fs.writeFileSync(filePath, base64Data, 'base64', function (err) {
-            console.log(err);
-        });
+        filePath = await image_save(canvas);
         console.log(filePath)
         new Notification('캡쳐 완료', {body: '캡쳐가 완료되었습니다.'});
         console.log('capture')
         resolve(filePath)
     })
 }
+
+function image_save(canvas){
+    return new Promise((resolve, reject) => {
+        var rnd = Math.floor(Math.random() * 1000000);
+        var dataURL = canvas.toDataURL('image/png');
+        filePath = 'img'+ rnd +'.jpg'
+        const base64Data = dataURL.replace(/^data:image\/png;base64,/, "");
+        fs.writeFileSync(filePath, base64Data, 'base64', function (err) {
+            console.log(err);
+        });
+        resolve(filePath)
+    })
+    
+}
+
+function loading_on(){
+    numb = document.querySelector(".numb");
+    over_frame = document.querySelector(".over-frame");
+    loader = document.querySelector(".loader");
+    over_frame.style.display = 'block';
+    numb.style.display = 'none';
+    loader.style.display = 'block';
+    console.log('loading')
+}
+
+function loading_off(){
+    loader.style.display = 'none';
+    numb.style.display = 'block';
+}
     
 
 function cnt_down(){
     return new Promise(function(resolve, reject){
-        numb = document.querySelector(".numb");
-        over_frame = document.querySelector(".over-frame");
-        loader = document.querySelector(".loader");
         over_frame.style.display = 'block';
         numb.style.display = 'block';
         let counter = 3;
@@ -98,8 +125,7 @@ function cnt_down(){
                 counter-=1;
                 if(counter==0){
                     //numb.textContent = '확인중';
-                    numb.style.display = 'none';
-                    loader.style.display = 'block';
+                    loading_on();
                 }
                 else numb.textContent = counter;
     
@@ -109,45 +135,59 @@ function cnt_down(){
 }
 
 async function test(){
-    for(var i = 0; i<1; i++){
+    for(image_num = 0; image_num < 2; image_num++){
         var check = await cnt_down();
         filePath = await capture();
-        ipcRenderer.send('api_call', filePath, 'image/check.jpg','faceCheck');
+        var result = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','faceCheck');
+        loading_off();
+        if(result == 'err'){
+            image_num--;
+            continue;
+        }
+        var number = JSON.parse(result)
+        if(number.result == 0){
+            numb.textContent = '확인불가';
+            image_num--;
+        }
+        else if(number.result ==1){
+            filePath = await image_save(canvas)
+            s3Path = 'signup/' + id + '/' + image_num +'.jpg';
+            ipcRenderer.send('api_call', filePath, s3Path, null)
+            over_frame.style.display = 'none'
+        }
+        else{
+            numb.textContent = '1명보다 많은 얼굴이 보입니다'
+            image_num--;
+        }
+        await wait(1);
     }
 }
 
-ipcRenderer.on('api_call_result', (event, result)=>{
-    console.log('api call result')
-    loader.style.display = 'none';
-    numb.style.display = 'block';
-    var number = JSON.parse(result)
-    if(number.result == 0){
-        numb.textContent = '확인불가';
-    }
-    else if(number.result ==1){
-        over_frame.style.display = 'none'
-    }
-    else{
-        numb.textContent = '1명보다 많은 얼굴이 보입니다'
-    }
-})
-
-function DB(){
-    var connection = mysql.createConnection({
-        host     : process.env.DB_HOST,
-        user     : process.env.DB_USERNAME,
-        password : process.env.DB_PASSWORD,
-        database : process.env.DB_DATABASE,
-    });
-
-    connection.connect();
-
-    connection.query('SELECT count(*) as num from sho', function (error, results, fields) {
-        if (error) throw error;
-        console.log('users: ', results[0].num);
-    });
-
-    connection.end();
+function wait(sec){
+    return new Promise((resolve, reject) => {
+        setTimeout(function() {
+            resolve();
+          }, sec * 1000);
+    })
 }
 
-DB();
+// ipcRenderer.on('api_call_result', async (event, result)=>{
+//     console.log('api call result')
+//     loader.style.display = 'none';
+//     numb.style.display = 'block';
+//     var number = JSON.parse(result)
+//     if(number.result == 0){
+//         numb.textContent = '확인불가';
+//         image_num--;
+//     }
+//     else if(number.result ==1){
+//         filePath = await image_save(canvas)
+//         s3Path = 'signup/' + id + '/' + image_num +'.jpg';
+//         ipcRenderer.send('api_call', filePath, s3Path, null)
+//         over_frame.style.display = 'none'
+//     }
+//     else{
+//         numb.textContent = '1명보다 많은 얼굴이 보입니다'
+//         image_num--;
+//     }
+// })

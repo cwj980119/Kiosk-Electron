@@ -89,25 +89,33 @@ s3_conn.upload = function(target_img, s3_loc, api_name){
         s3.upload(param, async function(err, data){
             if(err){
                 console.log(err);
+                reject(err)
             }
-            let loc = data.Location
-            const options = {
-                uri: process.env.FLASK + api_name,
-                qs:{
-                    object_name: s3_loc
-                    //page: loc
-                }
-            }
-            var result;          
             try {
                 fs.unlinkSync(target_img)
                 //file removed
             } catch(err) {
-                    console.error(err)
+                console.log(err);
+                console.error(err)
             }
-            request(options,function(err,reponse,body){
-                resolve(body);
-                })
+            if(api_name != null){
+                const options = {
+                    uri: process.env.FLASK + api_name,
+                    qs:{
+                        object_name: s3_loc
+                        //page: loc
+                    }
+                }
+                request(options,function(err,reponse,body){
+                    if(err){
+                        reject(err)
+                    }
+                    resolve(body);
+                    })
+            }
+            else{
+                console.log('api_name is null')
+            }
 
         })
     })
