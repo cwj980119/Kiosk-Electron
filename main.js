@@ -47,6 +47,8 @@ const createWindow = () => {
       width: 800, //1600
       height: 1280, //2560
       //fullscreen : true,
+      minWidth: 600,
+      minHeight: 960,
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false

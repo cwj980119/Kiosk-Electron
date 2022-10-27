@@ -18,6 +18,13 @@ var numb;
 var over_frame;
 var loader;
 
+var cap_message =['정면을 바라봐 주세요',
+                '왼쪽을 바라봐주세요',
+                '오른쪽을 바라봐주세요',
+                '위를 바라봐 주세요',
+                '아래를 바라봐 주세요',
+                '웃어주세요']
+
 window.onload = function(){
     loading_on();
     var sql = 'select count(*) as num from sho'
@@ -136,6 +143,10 @@ function cnt_down(){
 
 async function test(){
     for(image_num = 0; image_num < 2; image_num++){
+        over_frame.style.display = 'block';
+        numb.style.display = 'block';
+        numb.textContent = cap_message[image_num];
+        await wait(3);
         var check = await cnt_down();
         filePath = await capture();
         var result = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','faceCheck');
@@ -150,17 +161,19 @@ async function test(){
             image_num--;
         }
         else if(number.result ==1){
+            numb.textContent = '촬영완료'
             filePath = await image_save(canvas)
             s3Path = 'signup/' + id + '/' + image_num +'.jpg';
             ipcRenderer.send('api_call', filePath, s3Path, null)
-            over_frame.style.display = 'none'
+            //over_frame.style.display = 'none'
         }
-        else{
+        else{`  `
             numb.textContent = '1명보다 많은 얼굴이 보입니다'
             image_num--;
         }
         await wait(1);
     }
+    over_frame.style.display = 'none'
 }
 
 function wait(sec){
