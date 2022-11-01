@@ -48,3 +48,13 @@ body {
     transform: scaleX(-1);
     height: 90vh;
   }
+
+  .back{
+    position: absolute;
+    left: 5vw;
+    top: 5vh;
+    background-color: rgb(253, 230, 22);
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+  }

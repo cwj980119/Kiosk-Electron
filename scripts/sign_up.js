@@ -11,6 +11,8 @@ var gender;
 var birthday;
 var id = 9999; //중복 저장방지 큰 값
 var image_num;
+var train_num = 0;
+var test_num = 0;
 
 var video = null;
 var canvas = null;
@@ -23,7 +25,12 @@ var cap_message =['정면을 바라봐 주세요',
                 '오른쪽을 바라봐주세요',
                 '위를 바라봐 주세요',
                 '아래를 바라봐 주세요',
-                '웃어주세요']
+                '웃어주세요',
+                '아~',
+                '에~',
+                '이~',
+                '오~',
+                '우~']
 
 window.onload = function(){
     loading_on();
@@ -141,7 +148,7 @@ function cnt_down(){
     })
 }
 
-async function test(){
+async function take_pic(){
     for(image_num = 0; image_num < 2; image_num++){
         over_frame.style.display = 'block';
         numb.style.display = 'block';
@@ -162,8 +169,15 @@ async function test(){
         }
         else if(number.result ==1){
             numb.textContent = '촬영완료'
+            if(image_num == 0 || image_num == 4 || image_num == 7){ //test 데이터
+                s3Path = 'signup/dataset/test/' + id + '/' + test_num +'.jpg';
+                test_num++;
+            }
+            else{
+                s3Path = 'signup/dataset/train/' + id + '/' + train_num +'.jpg';
+                train_num++;
+            }
             filePath = await image_save(canvas)
-            s3Path = 'signup/' + id + '/' + image_num +'.jpg';
             ipcRenderer.send('api_call', filePath, s3Path, null)
             //over_frame.style.display = 'none'
         }

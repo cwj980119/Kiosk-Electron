@@ -63,5 +63,5 @@ async function test(){
     capture(ratio)
     //await capture();
 }
-
-test();
+cam_on();
+//test();
