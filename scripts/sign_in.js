@@ -73,7 +73,9 @@ async function test(){
     if(number.result == 1){
         filePath = await image_save(canvas)
         predict = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','fileDownload');
-        console.log(predict[0], predict[1])
+        p = JSON.parse(predict)
+        console.log(p)
+        set_name(p);        
         id_window_on()
     }
     else{
@@ -82,9 +84,16 @@ async function test(){
     //await capture();
 }
 
+function set_name(p){
+    document.getElementById('name0').innerText = p[0].name;
+    document.getElementById('name1').innerText = p[1].name;
+    document.getElementById('name2').innerText = p[2].name;
+    document.getElementById('name3').innerText = p[3].name;
+}
+
 window.onload = function(){
-    cam_on();
-    id_window_on()
+
+    test();
 
 }
 //test();
