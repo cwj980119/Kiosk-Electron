@@ -12,13 +12,15 @@ body {
   margin: 0%;
   text-align: center;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container {
   width: 90vw;
   height: 90vh;
-  margin-left: 5vw;
-  margin-top: 5%;
+
   overflow: hidden;
 }
 
@@ -36,7 +38,7 @@ body {
 }
 
 .upper-frame{
-  transform: translate(0, -90vh);
+  transform: translate(0, 0vh);
   transition: all 0.5s;
 }
 

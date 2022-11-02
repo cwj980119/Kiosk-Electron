@@ -22,12 +22,13 @@ body {
   margin: 0%;
   text-align: center;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .container {
     width: 90vw;
     height: 90vh;
-    margin-left: 5vw;
-    margin-top: 5%;
     overflow: hidden;
   }
 
@@ -66,4 +67,30 @@ body {
     height: 10%;
     background-color: aquamarine;
     border-radius: 20px;
+}
+
+.advertise{
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  opacity: 1;
+  background-color: #fadfd7;
+  transform: translate(0, 0vh);
+  transition: all 0.5s;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+}
+
+.ad-picture{
+  width: 100%;
+  height: 70%;
+  background-color: aliceblue;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-word{
+  width: 100%;
+  height: 30%;
 }

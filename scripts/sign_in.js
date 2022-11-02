@@ -56,8 +56,9 @@ function wait(sec){
     })
 }
 
-a = (ain)=>{
-    console.log(ain)
+function id_window_on(){
+    win = document.getElementById('id-check')
+    win.style.opacity = 1;
 }
 
 async function test(){
@@ -72,12 +73,18 @@ async function test(){
     if(number.result == 1){
         filePath = await image_save(canvas)
         predict = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','fileDownload');
-        console.log(predict)
+        console.log(predict[0], predict[1])
+        id_window_on()
     }
     else{
         console.log('인식 오류')
     }
     //await capture();
 }
-//cam_on();
-test();
+
+window.onload = function(){
+    cam_on();
+    id_window_on()
+
+}
+//test();
