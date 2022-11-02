@@ -1,6 +1,7 @@
 var video = null;
 var canvas = null;
 const fs = require('fs')
+const { ipcRenderer } = require('electron')
 
 function cam_on(){
     function errorCallback(e) {
@@ -55,13 +56,28 @@ function wait(sec){
     })
 }
 
+a = (ain)=>{
+    console.log(ain)
+}
+
 async function test(){
     cam_on();
     await wait(3);
     console.log(window.innerWidth)
     ratio = window.innerWidth/window.innerHeight;
-    capture(ratio)
+    filePath = await capture(ratio)
+    result = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','faceCheck');
+    if(result == 'err') return
+    number = JSON.parse(result)
+    if(number.result == 1){
+        filePath = await image_save(canvas)
+        predict = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','fileDownload');
+        console.log(predict)
+    }
+    else{
+        console.log('인식 오류')
+    }
     //await capture();
 }
-cam_on();
-//test();
+//cam_on();
+test();
