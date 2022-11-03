@@ -92,8 +92,8 @@ function set_name(p){
 }
 
 window.onload = function(){
-
-    test();
+    cam_on();
+    //test();
 
 }
 //test();

@@ -88,9 +88,16 @@ body {
   background-color: aliceblue;
   align-items: center;
   justify-content: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .ad-word{
   width: 100%;
   height: 30%;
+}
+
+.hi-mark{
+  width: 30vw;
+  height: 30vw;
 }
