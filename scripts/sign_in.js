@@ -72,7 +72,7 @@ async function test(){
     number = JSON.parse(result)
     if(number.result == 1){
         filePath = await image_save(canvas)
-        predict = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','fileDownload');
+        predict = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','login');
         p = JSON.parse(predict)
         console.log(p)
         set_name(p);        
@@ -92,8 +92,8 @@ function set_name(p){
 }
 
 window.onload = function(){
-    cam_on();
-    //test();
+    //cam_on();
+    test();
 
 }
 //test();
