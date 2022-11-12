@@ -50,16 +50,24 @@ body {
 .button{
     border:1px solid #020202;
     background-color:#ffc477;
-	border-radius:20px;
-	font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	padding:6px 24px;
-	display:inline-block;
+    border-radius:20px;
+    font-family:Arial;
+    font-size:15px;
+    font-weight:bold;
+    padding:6px 24px;
+    display:inline-block;
     height: 70%;
     width: 90%;
     font-size: 100%;
     margin: 5% auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu_text{
+  font-size: large;
 }
 
 .to_menu{
@@ -95,6 +103,11 @@ body {
 .ad-word{
   width: 100%;
   height: 30%;
+}
+
+.ai_menu{
+  width: 50vw;
+  height: 50vw;
 }
 
 .hi-mark{
