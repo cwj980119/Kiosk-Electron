@@ -66,8 +66,10 @@ body {
     justify-content: center;
 }
 
-.menu_text{
-  font-size: large;
+.text{
+  font-family:Arial;
+  font-size: 40px;
+  font-weight:bold;
 }
 
 .to_menu{
