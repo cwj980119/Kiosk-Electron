@@ -64,7 +64,7 @@ align-items: center;
 .menu-frame{
   width: 90%;
   height: 90%;
-  background-color: rgb(96, 201, 75);
+  background-color: rgb(255,255,255);
   border-radius: 20px;
 }
 
@@ -82,4 +82,8 @@ align-items: center;
   background-color: blueviolet;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+}
+
+#username{
+  font-size: 30px;
 }

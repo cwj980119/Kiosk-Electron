@@ -52,7 +52,7 @@ body {
   .back{
     position: absolute;
     left: 5vw;
-    top: 5vh;
+    top: 2vh;
     background-color: rgb(253, 230, 22);
     border-radius: 10px;
     width: 100px;
@@ -111,7 +111,7 @@ body {
   }
 
   .id-name{
-    width: 60%;
+    width: 50%;
   }
 
   .id-number{

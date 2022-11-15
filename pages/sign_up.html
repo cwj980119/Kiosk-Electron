@@ -17,7 +17,7 @@
                     </ul>
                 </div>
                 <div class="sform">
-                    <form class="form-signup" action="" method="post" name="form">
+                    <form class="form-signup" id= "form-signup" action="" method="post" name="form">
                         <label for="fullname">이름</label>
                         <input class="form-styling" id="fullname" type="text" name="fullname" placeholder="" />
                         <label for="password">비밀번호</label>
@@ -26,12 +26,14 @@
                         <input class="form-styling" id="confirmpassword" type="password" name="confirmpassword" placeholder="" />
                         <label for="birthday">생년월일</label>
                         <input class="form-styling" id="birthday" type="date" name="birthday" placeholder="" style="text-align: center;"/>
+                        <label for="phonenumber">전화번호</label>
+                        <input class="form-styling" id="phonenumber" type="text" name="phonenumber" placeholder="" />
                         
                         <a ng-click="checked = !checked" class="btn-signup">확인</a>
+                        <a href="./initial.html" class="btn-cancle">취소</a>
                     </form>
                 </div>
                 <div class="to_main">
-                    <a href="./initial.html">취소</a>
                 </div>
                 <div>
                     <h1 class="welcome">Welcome, Chris</h1>
@@ -50,9 +52,14 @@
                     </a>
                 </div>
                 <canvas id = "canvas" style="display:none;"></canvas>
-                <div>
+                <div class="ment-back">
+                    <br>
                     <a 회원가입에는 class="explain">시작을 누르면 회원가입을 진행합니다<br>회원가입에는 몇 분정도 소요됩니다.<br>준비가 되시면 시작 버튼을 눌러주세요<br></a>
-                    <a href="#" onclick="take_pic()" class = "start-capture">시작</a>
+                    <br>
+                    <div class="start-frame">
+                        <a href="#" onclick="take_pic()" class = "start-capture">시작</a>
+
+                    </div>
                 </div>
             </div>
         </div>

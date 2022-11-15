@@ -6,12 +6,11 @@ const mysql = require('mysql')
 require('dotenv').config();
 
 ipcMain.on('api_call' ,async (event, img, s3_loc, api_name) => {
-  console.log('api call')
   var t = require("./scripts/s3_conn.js")
   await t.upload(img, s3_loc, api_name)
   .then((value)=>{
     result = value;
-    console.log('1', result);
+    console.log('api result : ', result);
   })
   .catch(()=>{
     result = 'err';
@@ -28,9 +27,23 @@ ipcMain.on('s3_upload', (event, argument) => {
 
 })
 
-ipcMain.on('sign_up',(event, argument)=>{
-  
-
+ipcMain.on('sign_up',async (event, name, pass, birth, phone)=>{
+  const options = {
+    uri: process.env.FLASK + 'alldataset_model',
+    qs:{
+      fullname: name,
+      password: pass,
+      birthday: birth,
+      phonenumber: phone
+          //page: loc
+    }
+  }
+  request(options,function(err,reponse,body){
+    if(err){
+        reject(err)
+    }
+    //resolve(body);
+  })
 })
 
 ipcMain.on('faceCheck',async (event, argument)=>{
@@ -52,8 +65,8 @@ const createWindow = () => {
       webPreferences: {
         nodeIntegration: true,
         contextIsolation: false
-      }
-      // frame: false //Remove Frame
+      },
+      frame: false //Remove Frame
     })
     
     //win.removeMenu()

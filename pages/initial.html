@@ -9,11 +9,11 @@
             <div>
                 <button type="button" class = "button" onclick="location.href='../pages/sign_in.html'">
                     <img src="../src/ai_icon.png" alt="AI_icon" class="ai_menu"></img>
-                    <a class="text">AI 메뉴추천</a>
+                    <a class="text">AI 메뉴 주문하기</a>
                 </button>
             </div>
             <div>
-                <button class = "to_menu" onclick="location.href='../pages/menu.html'">
+                <button class = "to_menu" onclick="location.href='../pages/menu.html'; localStorage.setItem('name', '게스트');">
                     <a class="text">바로 메뉴 주문하기</a>
                 </button>
             </div>

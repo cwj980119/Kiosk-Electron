@@ -45,6 +45,7 @@ window.onload = function(){
         password = document.getElementById('password').value;
         confirmpassword = document.getElementById('confirmpassword').value;
         birthday = document.getElementById('birthday').value;
+        phonenumber = document.getElementById('phonenumber').value;
         if(password == confirmpassword && password!=""){
             console.log(document.getElementById('camname').innerText);
             document.getElementById('camname').innerText = fullname +' 님';
@@ -59,6 +60,7 @@ window.onload = function(){
     document.querySelector('.cam-back').addEventListener('click',function(){
         document.querySelector('.upper-frame').style.transform = 'translate(0, 0vh)'
     })
+
     loading_off();
     over_frame.style.display = 'none';
 }
@@ -149,7 +151,7 @@ function cnt_down(){
 }
 
 async function take_pic(){
-    for(image_num = 0; image_num < 2; image_num++){
+    for(image_num = 0; image_num < 11; image_num++){
         over_frame.style.display = 'block';
         numb.style.display = 'block';
         numb.textContent = cap_message[image_num];
@@ -187,7 +189,11 @@ async function take_pic(){
         }
         await wait(1);
     }
+    numb.textContent = '쵤영이 완료되었습니다'
+    await wait(3);
     over_frame.style.display = 'none'
+    ipcRenderer.send('signup')
+
 }
 
 function wait(sec){

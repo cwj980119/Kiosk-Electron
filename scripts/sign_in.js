@@ -63,23 +63,26 @@ function id_window_on(){
 
 async function test(){
     cam_on();
-    await wait(3);
-    console.log(window.innerWidth)
-    ratio = window.innerWidth/window.innerHeight;
-    filePath = await capture(ratio)
-    result = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','faceCheck');
-    if(result == 'err') return
-    number = JSON.parse(result)
-    if(number.result == 1){
-        filePath = await image_save(canvas)
-        predict = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','login');
-        p = JSON.parse(predict)
-        console.log(p)
-        set_name(p);        
-        id_window_on()
-    }
-    else{
-        console.log('인식 오류')
+    while(1){
+        await wait(3);
+        console.log(window.innerWidth)
+        ratio = window.innerWidth/window.innerHeight;
+        filePath = await capture(ratio)
+        result = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','faceCheck');
+        if(result == 'err') return
+        number = JSON.parse(result)
+        if(number.result == 1){
+            filePath = await image_save(canvas)
+            predict = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','login');
+            p = JSON.parse(predict)
+            console.log(p)
+            set_name(p);        
+            id_window_on()
+            break;
+        }
+        else{
+            console.log('인식 오류')
+        }
     }
     //await capture();
 }
