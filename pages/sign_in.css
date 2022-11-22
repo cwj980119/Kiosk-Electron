@@ -102,7 +102,7 @@ body {
     color: white;
   }
 
-  .id-list{
+  .id-list-predict{
     height: 25%;
     width: 100%;
     justify-content: center;
@@ -116,4 +116,67 @@ body {
 
   .id-number{
     width: 30%;
+  }
+
+  .find-id{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px;
+    align-content: center;
+  }
+
+  .find-id-frame{
+    position: absolute;
+    width: 50vw;
+    height: 30vh;
+    background-color: azure;
+    border-radius: 20px;
+    display: none;
+    align-items: center;
+    overflow-y: scroll;
+  }
+  
+  .id-list-frame{
+    width: 100%;
+  }
+
+  .id-list{
+    background-color: white;
+    width: 90%;
+    max-height: 70%;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
+  }
+
+  .id-list-predict{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .id-info{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+  }
+
+  .id-name{
+    width: 40%;
+  }
+
+  .id-birth{
+    width: 40%;
+  }
+
+  .id-ok{
+    width: 20%;
+  }
+
+  .buttons{
+    width: 100%;
+    bottom: 10px;
   }

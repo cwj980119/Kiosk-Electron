@@ -22,30 +22,62 @@
             <h2>예측결과</h2>
         </div>
         <div class="id-list-box">
-            <div class="id-list">
+            <div class="id-list-predict">
                 <div class="id-name" id="name0">???</div>
                 <div class="id-number" id="number0">****</div>
-                <button class="id-button" id="button0" onclick="location.href='../pages/menu.html'; localStorage.setItem('name',p[0].name);" >확인</button>
+                <button class="id-button" id="button0" onclick="location.href='../pages/menu.html'; to_menu(0);" >확인</button>
             </div>
-            <div class="id-list">
+            <div class="id-list-predict">
                 <div class="id-name" id="name1">???</div>
                 <div class="id-number" id="number1">****</div>
-                <button class="id-button" id="button1" onclick="location.href='../pages/menu.html'; localStorage.setItem('name',p[1].name);">확인</button>
+                <button class="id-button" id="button1" onclick="location.href='../pages/menu.html'; to_menu(1);">확인</button>
             </div>
-            <div class="id-list">
+            <div class="id-list-predict">
                 <div class="id-name" id="name2">???</div>
                 <div class="id-number" id="number2">****</div>
-                <button class="id-button" id="button2" onclick="location.href='../pages/menu.html'; localStorage.setItem('name',p[2].name);">확인</button>
+                <button class="id-button" id="button2" onclick="location.href='../pages/menu.html'; to_menu(2);">확인</button>
             </div>
-            <div class="id-list">
+            <div class="id-list-predict">
                 <div class="id-name" id="name3">???</div>
                 <div class="id-number" id="number3">****</div>
-                <button class="id-button" id="button3" onclick="location.href='../pages/menu.html'; localStorage.setItem('name',p[3].name);">확인</button>
+                <button class="id-button" id="button3" onclick="location.href='../pages/menu.html'; to_menu(3);">확인</button>
             </div>
+        </div>
+        <div class="id-signup">
+            <a>내 이름이 없다면</a>
+            <button class = "to-signup" onclick="find_my_id()">내 이름 찾기</button>
         </div>
         <div class="id-signup">
             <a>아이디가 없다면</a>
             <button class = "to-signup" onclick="location.href='../pages/sign_up.html'">회원가입</button>
+        </div>
+        <div class="id-signup">
+            <a>바로 주문하려면</a>
+            <button class = "to-signup" onclick="location.href='../pages/menu.html'">주문하기</button>
+        </div>
+    </div>
+    <div class="find-id-frame" id="find-id-frame">
+        <div class="find-id">
+            <div class="id-a">
+                <a>전화번호 뒷자리를 입력해주세요</a>
+                <div>
+                    <input type="text" pattern="\d*" maxlength="4" id ="phonenumb"/>
+                    <button onclick="search()">확인</button>
+                </div>
+                <div class="id-list-frame">
+                    <div class="id-info">
+                        <div class = "id-name">이름</div>
+                        <div class="id-birth">생년월일</div>
+                        <div class ="id-ok">확인</div>
+                    </div>
+                    <div class="id-list" id = "id-list">
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                <button class = "to-signup" onclick="location.href='../pages/sign_up.html'">회원가입</button>
+                <button class = "to-signup" onclick="location.href='../pages/menu.html'">비회원 주문</button>
+            </div>
         </div>
     </div>
 </body>

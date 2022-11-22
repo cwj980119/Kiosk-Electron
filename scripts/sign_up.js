@@ -1,6 +1,7 @@
 const { count } = require('console');
 const { ipcRenderer } = require('electron')
 const fs = require('fs')
+require('dotenv').config();
 
 
 var fullname;
@@ -20,6 +21,8 @@ var numb;
 var over_frame;
 var loader;
 
+var user_table = process.env.DB_USER_TABLE;
+
 var cap_message =['정면을 바라봐 주세요',
                 '왼쪽을 바라봐주세요',
                 '오른쪽을 바라봐주세요',
@@ -34,7 +37,7 @@ var cap_message =['정면을 바라봐 주세요',
 
 window.onload = function(){
     loading_on();
-    var sql = 'select count(*) as num from sho'
+    var sql = 'select count(*) as num from '+ user_table
     db_result = ipcRenderer.sendSync('DB_call', sql)
     id = db_result[0].num;
     console.log(id);
@@ -193,7 +196,6 @@ async function take_pic(){
     await wait(3);
     over_frame.style.display = 'none'
     ipcRenderer.send('signup')
-
 }
 
 function wait(sec){

@@ -23,7 +23,23 @@ ipcMain.on('DB_call', async (event, sql) => {
   event.returnValue = result;
 })
 
-ipcMain.on('s3_upload', (event, argument) => {
+ipcMain.on('flask_call', async (event, api_name, obj_name) => {
+  response = await new Promise((resolve, reject) => {
+    const options = {
+      uri: process.env.FLASK + api_name,
+      qs:{
+          object_name: obj_name
+          //page: loc
+      }
+    }
+    request(options,function(err,reponse,body){
+      if(err){
+          reject(err)
+      }
+      resolve(body);
+      })
+  })
+  event.returnValue = response;
 
 })
 
