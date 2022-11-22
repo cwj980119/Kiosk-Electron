@@ -10,114 +10,194 @@
         <a id="username"></a>
         <div class="menu-upper-frame">
           <div class="menu-category">
-            <div class="category">추천메뉴</div>
-            <div class="category">밥류</div>
-            <div class="category">면류</div>
-            <div class="category">사이드</div>
-            <div class="category">음료</div>
+            <div class="category" onclick="goToScroll('reco-menu')">추천메뉴</div>
+            <div class="category" onclick="goToScroll('main-menu')">메인메뉴</div>
+            <div class="category" onclick="goToScroll('side-menu')">사이드</div>
+            <div class="category" onclick="goToScroll('drink-menu')">음료</div>
           </div>
           <div class="menu-list-frame">
             <div class="menu-list">
+              <div class="name-tag" id = "reco-menu">추천메뉴</div>
               <article class="menu">
                 <img src="../src/HIU.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a id="reco-main">국수<br></a>
+                  <a id="reco-main-price">2000</a>
+                  <a>원<br></a>
+                  <button onclick="addMenuReco(document.getElementById('reco-main').innerText,document.getElementById('reco-main-price').innerText )">담기</button>
                 </div>
               </article>
               <article class="menu">
                 <img src="../src/HIU.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a id="reco-side">국수<br></a>
+                  <a id="reco-side-price">2000</a>
+                  <a>원<br></a>
+                  <button onclick="addMenuReco(document.getElementById('reco-side').innerText,document.getElementById('reco-side-price').innerText )">담기</button>
                 </div>
               </article>
               <article class="menu">
                 <img src="../src/HIU.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a id="reco-drink">국수<br></a>
+                  <a id="reco-drink-price">2000</a>
+                  <a>원<br></a>
+                  <button onclick="addMenuReco(document.getElementById('reco-drink').innerText,document.getElementById('reco-drink-price').innerText )">담기</button>
+                </div>
+              </article>
+              <div class="name-tag" id = "main-menu">메인메뉴</div>
+              <article class="menu">
+                <img src="../src/라면.jpg" alt="이미지"/>
+                <div class="description">
+                  <a>라면<br></a>
+                  <a>4000원<br></a>
+                  <button onclick="addMenu('라면',4000)">담기</button>
                 </div>
               </article>
               <article class="menu">
-                <img src="../src/HIU.jpg" alt="이미지"/>
+                <img src="../src/짜장면.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a>짜장면<br></a>
+                  <a>6000원<br></a>
+                  <button onclick="addMenu('짜장면',6000)">담기</button>
                 </div>
               </article>
               <article class="menu">
-                <img src="../src/HIU.jpg" alt="이미지"/>
+                <img src="../src/설렁탕.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a>설렁탕<br></a>
+                  <a>10000원<br></a>
+                  <button onclick="addMenu('설렁탕',10000)">담기</button>
                 </div>
               </article>
               <article class="menu">
-                <img src="../src/HIU.jpg" alt="이미지"/>
+                <img src="../src/파스타.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a>파스타<br></a>
+                  <a>10000원<br></a>
+                  <button onclick="addMenu('파스타',10000)">담기</button>
                 </div>
               </article>
               <article class="menu">
-                <img src="../src/HIU.jpg" alt="이미지"/>
+                <img src="../src/우동.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a>우동<br></a>
+                  <a>5000원<br></a>
+                  <button onclick="addMenu('우동',5000)">담기</button>
+                </div>
+              </article>
+              <div class="name-tag" id = "side-menu">사이드</div>
+              <article class="menu">
+                <img src="../src/찐만두.jpg" alt="이미지"/>
+                <div class="description">
+                  <a>찐만두<br></a>
+                  <a>3000원<br></a>
+                  <button onclick="addMenu('찐만두',3000)">담기</button>
                 </div>
               </article>
               <article class="menu">
-                <img src="../src/HIU.jpg" alt="이미지"/>
+                <img src="../src/군만두.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a>군만두<br></a>
+                  <a>4000원<br></a>
+                  <button onclick="addMenu('군만두',4000)">담기</button>
                 </div>
               </article>
               <article class="menu">
-                <img src="../src/HIU.jpg" alt="이미지"/>
+                <img src="../src/마늘빵.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a>마늘빵<br></a>
+                  <a>2000원<br></a>
+                  <button onclick="addMenu('마늘빵',2000)">담기</button>
                 </div>
               </article>
               <article class="menu">
-                <img src="../src/HIU.jpg" alt="이미지"/>
+                <img src="../src/가라아게.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a>가라아게<br></a>
+                  <a>3000원<br></a>
+                  <button onclick="addMenu('가라아게',3000)">담기</button>
                 </div>
               </article>
               <article class="menu">
-                <img src="../src/HIU.jpg" alt="이미지"/>
+                <img src="../src/감자튀김.jpg" alt="이미지"/>
                 <div class="description">
-                  <a>마크</a>
-                  <a>테스트</a>
-                  <button>담기</button>
+                  <a>감자튀김<br></a>
+                  <a>2000원<br></a>
+                  <button onclick="addMenu('감자튀김',2000)">담기</button>
+                </div>
+              </article>
+              <div class="name-tag" id = "drink-menu">음료</div>
+              <article class="menu">
+                <img src="../src/콜라.jpg" alt="이미지"/>
+                <div class="description">
+                  <a>콜라<br></a>
+                  <a>2000원<br></a>
+                  <button onclick="addMenu('콜라',2000)">담기</button>
+                </div>
+              </article>
+              <article class="menu">
+                <img src="../src/사이다.jpg" alt="이미지"/>
+                <div class="description">
+                  <a>사이다<br></a>
+                  <a>2000원<br></a>
+                  <button onclick="addMenu('사이다',2000)">담기</button>
+                </div>
+              </article>
+              <article class="menu">
+                <img src="../src/자몽에이드.jpg" alt="이미지"/>
+                <div class="description">
+                  <a>자몽에이드<br></a>
+                  <a>4000원<br></a>
+                  <button onclick="addMenu('자몽에이드',4000)">담기</button>
+                </div>
+              </article>
+              <article class="menu">
+                <img src="../src/딸기주스.jpg" alt="이미지"/>
+                <div class="description">
+                  <a>딸기주스<br></a>
+                  <a>3000원<br></a>
+                  <button onclick="addMenu('딸기주스',3000)">담기</button>
+                </div>
+              </article>
+              <article class="menu">
+                <img src="../src/아메리카노.jpg" alt="이미지"/>
+                <div class="description">
+                  <a>아메리카노<br></a>
+                  <a>3000원<br></a>
+                  <button onclick="addMenu('아메리카노',3000)">담기</button>
                 </div>
               </article>
             </div>
           </div>
         </div>
         <div class="order-list-frame">
-          <div class="order-list">
-            
+          <div class="order-title">
+            <a class="t12">주문목록</a>
+          </div>
+          <div class="order-list" id="order-list">
+          </div>
+          <div class="order-done">
+            <div class="total-price" id="total">총금액 : 0원</div>
+            <button onclick="order()">주문하기</button>
+            <button onclick="cancle()">취소</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <button onclick="location.href='../pages/initial.html'" class="go_back">
-    <a>취소</a>
+  <div class="over-frame">
+    <div class="order-check">
+      <a>주문하시겠습니까?</a>
+       <div class="order-check-frame">
+         <div class="order-check-buttons">
+           <button>예</button>
+           <button onclick="order_cancle()">아니오</button>
+          </div>
+        </div>
+      </div>
+    </div>
+      <button onclick="location.href='../pages/initial.html'" class="go_back">
+        <a>취소</a>
   </button>
 </body>
