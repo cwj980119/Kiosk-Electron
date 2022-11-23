@@ -2,73 +2,61 @@ var total_price = 0;
 const { ipcRenderer } = require('electron');
 var menu_table = process.env.DB_MENU_TABLE;
 
+var value
+var age
+var gender
+var db
+var drinkdish
+var maindish
+var sidedish
+
 window.onload = async function(){
-    var value = localStorage.getItem('name');
-    var age = localStorage.getItem('age');
-    var gender = localStorage.getItem('gender');
-    var db = localStorage.getItem('DB');
     document.getElementById('username').innerText = value +' 님 환영합니다!';
     if(age == 0){
         //total
         document.getElementById('reco-menu').innerText = '우리매장 추천메뉴';
-        column = 'total'
     }
     else if(age < 20){
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '10대 남성 추천메뉴';
-            column = '0m'
         }
         else{
             document.getElementById('reco-menu').innerText = '10대 여성 추천메뉴';
-            column = '0f'
         }
     }
     else if(age < 30){
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '20대 남성 추천메뉴';
-            column = '20m'
         }
         else{
             document.getElementById('reco-menu').innerText = '20대 여성 추천메뉴';
-            column = '20f'
         }
     }
     else if(age < 40){
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '30대 남성 추천메뉴';
-            column = '30m'
         }
         else{
             document.getElementById('reco-menu').innerText = '30대 여성 추천메뉴';
-            column = '30f'
         }
     }
     else if(age < 50){
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '40대 남성 추천메뉴';
-            column = '40m'
 
         }
         else{
             document.getElementById('reco-menu').innerText = '40대 여성 추천메뉴';
-            column = '30f'
         }
     }
     else{
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '50대 남성 추천메뉴';
-            column = '50m'
         }
         else{
             document.getElementById('reco-menu').innerText = '50대 여성 추천메뉴';
-            column = '50f'
         }
     }
-    recommend=ipcRenderer.sendSync('DB_call',"select menuID, menuname, price from `log-in`.menu as d where "+ column +" = (select max("+ column +") from `log-in`."+menu_table +" as f where f.category = d.category) group by category")
-    console.log(recommend)
-    drinkdish = recommend[0]
-    maindish = recommend[1]
-    sidedish = recommend[2]
 
     document.getElementById("reco-main-img").src = "../src/"+maindish['menuname']+".jpg"
     document.getElementById("reco-main").innerHTML = maindish['menuname']+"<br>"
@@ -83,6 +71,63 @@ window.onload = async function(){
     document.getElementById("reco-drink-price").innerHTML = drinkdish['price']
 }
 
+
+function page_loading(){
+    value = localStorage.getItem('name');
+    age = localStorage.getItem('age');
+    gender = localStorage.getItem('gender');
+    db = localStorage.getItem('DB');
+    if(age == 0){
+        //total
+        column = 'total'
+    }
+    else if(age < 20){
+        if(gender == 1){
+            column = '0m'
+        }
+        else{
+            column = '0f'
+        }
+    }
+    else if(age < 30){
+        if(gender == 1){
+            column = '20m'
+        }
+        else{
+            column = '20f'
+        }
+    }
+    else if(age < 40){
+        if(gender == 1){
+            column = '30m'
+        }
+        else{
+            column = '30f'
+        }
+    }
+    else if(age < 50){
+        if(gender == 1){
+            column = '40m'
+
+        }
+        else{
+            column = '30f'
+        }
+    }
+    else{
+        if(gender == 1){
+            column = '50m'
+        }
+        else{
+            column = '50f'
+        }
+    }
+    recommend=ipcRenderer.sendSync('DB_call',"select menuID, menuname, price from `log-in`.menu as d where "+ column +" = (select max("+ column +") from `log-in`."+menu_table +" as f where f.category = d.category) group by category")
+    console.log(recommend)
+    drinkdish = recommend[0]
+    maindish = recommend[1]
+    sidedish = recommend[2]
+}
 function test(){
     document.querySelector('.menu-list').style.transform = 'translate(0, 0vh)'
 }
@@ -150,3 +195,5 @@ function wait(sec){
           }, sec * 1000);
     })
 }
+
+page_loading()

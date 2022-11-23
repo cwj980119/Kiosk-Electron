@@ -3,7 +3,7 @@ const { ipcRenderer } = require('electron')
 window.onload = function(){
     document.querySelector('.advertise').addEventListener('click',async function(){
         document.querySelector('.advertise').style.transform = 'translate(0, -100vh)'
-        await wait(20);
+        await wait(12);
         document.querySelector('.advertise').style.transform = 'translate(0, 0vh)'
     })
 }

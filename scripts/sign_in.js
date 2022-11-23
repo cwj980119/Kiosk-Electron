@@ -2,7 +2,7 @@ var video = null;
 var canvas = null;
 var re;
 const fs = require('fs')
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, Tray } = require('electron');
 const { BlockList } = require('net');
 require('dotenv').config();
 
@@ -34,7 +34,6 @@ function capture(winRatio){
         imagex = (640 - canvas.width)/2
         context.drawImage(video, imagex, 0, canvas.width, 480, 0, 0, canvas.width , canvas.height);
         filePath = await image_save(canvas);
-        console.log(filePath)
         //new Notification('캡쳐 완료', {body: '캡쳐가 완료되었습니다.'});
         console.log('capture')
         resolve(filePath)
@@ -69,19 +68,30 @@ function id_window_on(){
 }
 
 async function test(){
-    cam_on();
+    var cnt = 0;
+    no_people = false;
+    await loading_on('인식중');
+    await wait(1)
     while(1){
-        await wait(3);
         console.log(window.innerWidth)
         ratio = window.innerWidth/window.innerHeight;
         filePath = await capture(ratio)
         result = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','faceCheck');
-        if(result == 'err') return
+        if(result == 'err') {
+            console.log('err')
+            return
+        }
         number = JSON.parse(result)
         if(number.result == 1){
             filePath = await image_save(canvas)
-            predict = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','login');
-            p = JSON.parse(predict)
+            try {
+                predict = ipcRenderer.sendSync('api_call', filePath, 'image/check.jpg','login');
+                p = JSON.parse(predict)
+            } catch (error) {
+                console.log('catched')
+                continue;
+            }
+            loading_off()
             console.log(p)
             set_name(p);        
             id_window_on()
@@ -90,6 +100,24 @@ async function test(){
         else{
             console.log('인식 오류')
         }
+        cnt++;
+        console.log(cnt)
+        if(cnt > 7) {
+            no_people = true;
+            break;
+        }
+    }
+    if(no_people) {
+        loading_off()
+        warning = document.querySelector(".warning");
+        warn_text = document.querySelector(".warning-text");
+        warning.style.display = 'flex';
+        await wait(1);
+        warn_text.innerHTML = '얼굴을 찾을 수 없어 <br> 2초 후 <br>메인화면으로 돌아갑니다'
+        await wait(1);
+        warn_text.innerHTML = '얼굴을 찾을 수 없어 <br> 1초 후 <br>메인화면으로 돌아갑니다'
+        await wait(1);
+        location.href='../pages/initial.html';
     }
     //await capture();
 }
@@ -169,12 +197,30 @@ async function addFaceData(target){
     localStorage.setItem('DB', true);
 }
 
-window.onload = function(){
-    //cam_on();
+window.onload = async function(){
+    loading_off();
+    cam_on();
+    await wait(1)
+    test();
     localStorage.setItem('name', '게스트');
     localStorage.setItem('age', 0);
     localStorage.setItem('DB', false);
     //console.log(ipcRenderer.sendSync('flask_call', 'age_gender',null));
-    test();
 
+}
+
+function loading_on(text){
+    return new Promise((resolve, reject) => {
+        over_frame = document.querySelector(".over-frame");
+        numb = document.querySelector(".numb");
+        numb.innerHTML = text;
+        over_frame.style.display = 'block';
+        console.log('done')
+        resolve()
+    })
+}
+
+function loading_off(){
+    over_frame = document.querySelector(".over-frame");
+    over_frame.style.display = 'none';
 }

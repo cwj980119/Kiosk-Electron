@@ -44,14 +44,19 @@ ipcMain.on('flask_call', async (event, api_name, obj_name) => {
 })
 
 ipcMain.on('sign_up',async (event, pictures, name, pass, birth, gend, phone)=>{
-  response = await new Promise((resolve, reject) => {
+  console.log('여기나옴')
+  response = await sign_up(pictures, name, pass, birth, gend, phone);
+})
+
+function sign_up(pictures, name, pass, birth, gend, phone){
+  return new Promise((resolve, reject) => {
     const options = {
       uri: process.env.FLASK + 'signup_dataset_model',
       qs:{
         object_name: pictures,
         fullname: name,
         password: pass,
-        birthday: birth,
+        birthdate: birth,
         gender: gend,
         phonenumber: phone
             //page: loc
@@ -64,22 +69,26 @@ ipcMain.on('sign_up',async (event, pictures, name, pass, birth, gend, phone)=>{
       resolve(body);
     })
   })
-})
+}
 
 ipcMain.on('faceCheck',async (event, argument)=>{
   console.log('fc')
   var img = argument;
   console.log(img)
   var temp = require("./scripts/s3_conn.js");
-  await temp.check(img)
-;})
+  await temp.check(img);
+})
+
+ipcMain.on('console_test',(event, argument)=>{
+  console.log(argument)
+})
 
 
 const createWindow = () => {
     const win = new BrowserWindow({
       width: 800, //1600
       height: 1280, //2560
-      //fullscreen : true,
+      fullscreen : true,
       minWidth: 600,
       minHeight: 960,
       webPreferences: {

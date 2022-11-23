@@ -180,3 +180,68 @@ body {
     width: 100%;
     bottom: 10px;
   }
+
+  .over-frame{
+    opacity: 100%;
+    display: block;
+    left: 0vw;
+    top: 0;
+    position: absolute;
+    width: 90vw;
+    height: 90vh;
+    margin-left: 5vw;
+    margin-top: 5vh;
+  }
+
+  .loader {
+    opacity: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    margin: -10vw 0 0 -10vw;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 20vw;
+    height: 20vw;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .numb{
+    display: block;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    z-index: 10;
+    font-weight: 500;
+    font-size: 30px;
+  }
+
+  .warning{
+
+    position: absolute;
+    width: 50%;
+    height: 20%;
+    background-color:rgba(199, 241, 252, 1);
+    display: none;
+    align-content: space-around;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  #warning-text{
+
+  }

@@ -116,3 +116,8 @@ body {
   width: 30vw;
   height: 30vw;
 }
+
+.title{
+  font-weight: bold;
+  font-size: 60px;
+}

@@ -35,12 +35,16 @@ var cap_message =['정면을 바라봐 주세요',
                 '오~',
                 '우~']
 
-window.onload = function(){
-    loading_on();
+function page_loading(){
     var sql = 'select count(*) as num from '+ user_table
     db_result = ipcRenderer.sendSync('DB_call', sql)
     id = db_result[0].num;
-    console.log(id);
+}
+
+window.onload = async function(){
+    loading_on();
+    await wait(1);
+    page_loading();
     numb = document.querySelector(".numb");
     canvas = document.getElementById('canvas');
     document.querySelector('.btn-signup').addEventListener('click',function(){
@@ -54,6 +58,7 @@ window.onload = function(){
             console.log(document.getElementById('camname').innerText);
             document.getElementById('camname').innerText = fullname +' 님';
             document.querySelector('.upper-frame').style.transform = 'translate(0, -90vh)'
+            if(birthday == '') birthday = '2023';
             cam_on();
         }
         else {
@@ -191,7 +196,7 @@ async function take_pic(){
             ipcRenderer.send('api_call', filePath, s3Path, null)
             //over_frame.style.display = 'none'
         }
-        else{`  `
+        else{
             numb.textContent = '1명보다 많은 얼굴이 보입니다'
             image_num--;
         }
@@ -200,9 +205,10 @@ async function take_pic(){
     numb.textContent = '쵤영이 완료되었습니다'
     await wait(3);
     over_frame.style.display = 'none';
-    ipcRenderer.send('signup', picture_arr ,fullname, password, birthday, gender, phonenumber);
-    localStorage.setItem('age',age);
-    localStorage.setItem('gender',p[i]['gender']);
+    ipcRenderer.send('sign_up', picture_arr ,fullname, password, birthday, gender, phonenumber);
+    localStorage.setItem('age',2023 - Number(birthday.substr(0,4)));
+    localStorage.setItem('name', fullname.substr(0,1) + '*' + fullname.substr(2));
+    localStorage.setItem('gender',gender);
     localStorage.setItem('DB', false);
     location.href='../pages/menu.html';
 }
@@ -214,6 +220,8 @@ function wait(sec){
           }, sec * 1000);
     })
 }
+
+//page_loading()
 
 // ipcRenderer.on('api_call_result', async (event, result)=>{
 //     console.log('api call result')
