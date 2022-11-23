@@ -43,22 +43,25 @@ ipcMain.on('flask_call', async (event, api_name, obj_name) => {
 
 })
 
-ipcMain.on('sign_up',async (event, name, pass, birth, phone)=>{
-  const options = {
-    uri: process.env.FLASK + 'alldataset_model',
-    qs:{
-      fullname: name,
-      password: pass,
-      birthday: birth,
-      phonenumber: phone
-          //page: loc
+ipcMain.on('sign_up',async (event, name, pass, birth, gend, phone)=>{
+  response = await new Promise((resolve, reject) => {
+    const options = {
+      uri: process.env.FLASK + 'alldataset_model',
+      qs:{
+        fullname: name,
+        password: pass,
+        birthday: birth,
+        gender: gend,
+        phonenumber: phone
+            //page: loc
+      }
     }
-  }
-  request(options,function(err,reponse,body){
-    if(err){
-        reject(err)
-    }
-    //resolve(body);
+    request(options,function(err,reponse,body){
+      if(err){
+          reject(err)
+      }
+      resolve(body);
+    })
   })
 })
 

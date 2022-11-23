@@ -49,6 +49,7 @@ window.onload = function(){
         confirmpassword = document.getElementById('confirmpassword').value;
         birthday = document.getElementById('birthday').value;
         phonenumber = document.getElementById('phonenumber').value;
+        gender = document.getElementById('gender').value;
         if(password == confirmpassword && password!=""){
             console.log(document.getElementById('camname').innerText);
             document.getElementById('camname').innerText = fullname +' 님';
@@ -56,6 +57,7 @@ window.onload = function(){
             cam_on();
         }
         else {
+            new Notification('비밀번호 확인', {body: '비밀번호가 일치하지 않습니다.'});
             console.log('비밀번호가 일치하지 않습니다.')
         }
     })
@@ -194,8 +196,8 @@ async function take_pic(){
     }
     numb.textContent = '쵤영이 완료되었습니다'
     await wait(3);
-    over_frame.style.display = 'none'
-    ipcRenderer.send('signup')
+    over_frame.style.display = 'none';
+    ipcRenderer.send('signup', fullname, password, birthday, gender, phonenumber);
 }
 
 function wait(sec){

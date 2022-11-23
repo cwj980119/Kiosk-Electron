@@ -106,7 +106,7 @@ function set_name(p){
 }
 
 function to_menu(i){
-    localStorage.setItem('name',p[i].name);
+    localStorage.setItem('name',p[i]['name'].substr(0,1) + '*' + p[i]['name'].substr(2));
     age = 2022 - Number(p[i]['year']) +1;
     localStorage.setItem('age',age);
     localStorage.setItem('gender',p[i]['gender']);
@@ -169,6 +169,8 @@ async function addData(el){
 
 window.onload = function(){
     //cam_on();
+    localStorage.setItem('name', '게스트');
+    localStorage.setItem('age', 0);
     console.log(ipcRenderer.sendSync('flask_call', 'age_gender',null));
     test();
 
