@@ -1,55 +1,86 @@
 var total_price = 0;
+const { ipcRenderer } = require('electron');
+var menu_table = process.env.DB_MENU_TABLE;
 
 window.onload = async function(){
     var value = localStorage.getItem('name');
     var age = localStorage.getItem('age');
     var gender = localStorage.getItem('gender');
+    var db = localStorage.getItem('DB');
     document.getElementById('username').innerText = value +' 님 환영합니다!';
     if(age == 0){
         //total
         document.getElementById('reco-menu').innerText = '우리매장 추천메뉴';
+        column = 'total'
     }
     else if(age < 20){
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '10대 남성 추천메뉴';
+            column = '0m'
         }
         else{
             document.getElementById('reco-menu').innerText = '10대 여성 추천메뉴';
+            column = '0f'
         }
     }
     else if(age < 30){
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '20대 남성 추천메뉴';
+            column = '20m'
         }
         else{
             document.getElementById('reco-menu').innerText = '20대 여성 추천메뉴';
+            column = '20f'
         }
     }
     else if(age < 40){
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '30대 남성 추천메뉴';
+            column = '30m'
         }
         else{
             document.getElementById('reco-menu').innerText = '30대 여성 추천메뉴';
+            column = '30f'
         }
     }
     else if(age < 50){
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '40대 남성 추천메뉴';
+            column = '40m'
+
         }
         else{
             document.getElementById('reco-menu').innerText = '40대 여성 추천메뉴';
+            column = '30f'
         }
     }
     else{
         if(gender == 1){
             document.getElementById('reco-menu').innerText = '50대 남성 추천메뉴';
+            column = '50m'
         }
         else{
             document.getElementById('reco-menu').innerText = '50대 여성 추천메뉴';
+            column = '50f'
         }
     }
+    recommend=ipcRenderer.sendSync('DB_call',"select menuID, menuname, price from `log-in`.menu as d where "+ column +" = (select max("+ column +") from `log-in`."+menu_table +" as f where f.category = d.category) group by category")
+    console.log(recommend)
+    drinkdish = recommend[0]
+    maindish = recommend[1]
+    sidedish = recommend[2]
 
+    document.getElementById("reco-main-img").src = "../src/"+maindish['menuname']+".jpg"
+    document.getElementById("reco-main").innerHTML = maindish['menuname']+"<br>"
+    document.getElementById("reco-main-price").innerHTML = maindish['price']
+
+    document.getElementById("reco-side-img").src = "../src/"+sidedish['menuname']+".jpg"
+    document.getElementById("reco-side").innerHTML = sidedish['menuname']+"<br>"
+    document.getElementById("reco-side-price").innerHTML = sidedish['price']
+
+    document.getElementById("reco-drink-img").src = "../src/"+drinkdish['menuname']+".jpg"
+    document.getElementById("reco-drink").innerHTML = drinkdish['menuname']+"<br>"
+    document.getElementById("reco-drink-price").innerHTML = drinkdish['price']
 }
 
 function test(){

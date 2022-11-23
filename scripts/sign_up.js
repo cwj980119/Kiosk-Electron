@@ -201,6 +201,10 @@ async function take_pic(){
     await wait(3);
     over_frame.style.display = 'none';
     ipcRenderer.send('signup', picture_arr ,fullname, password, birthday, gender, phonenumber);
+    localStorage.setItem('age',age);
+    localStorage.setItem('gender',p[i]['gender']);
+    localStorage.setItem('DB', false);
+    location.href='../pages/menu.html';
 }
 
 function wait(sec){

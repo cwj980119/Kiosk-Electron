@@ -110,6 +110,8 @@ function to_menu(i){
     age = 2022 - Number(p[i]['year']) +1;
     localStorage.setItem('age',age);
     localStorage.setItem('gender',p[i]['gender']);
+    localStorage.setItem('id',p[i]['id']);
+    localStorage.setItem('DB', true);
     location.href='../pages/menu.html';
 }
 
@@ -161,9 +163,10 @@ async function addData(el){
     filePath = await image_save(canvas);
     ipcRenderer.send('api_call', filePath, s3Path, 'addface');
     ipcRenderer.sendSync('DB_call',"update "+user_table+" set " + column+" =  "+column+" +1 where memberID = "+String(Number(re[idx]['memberID'])))
-    localStorage.setItem('name', re[idx]['name']);
+    localStorage.setItem('name', re[idx]['name'].substr(0,1) + '*' + re[idx]['name'].substr(2));
     localStorage.setItem('age', age);
     localStorage.setItem('gender', re[idx]['gender']);
+    localStorage.setItem('DB', true);
     location.href='../pages/menu.html';
 }
 
@@ -171,7 +174,8 @@ window.onload = function(){
     //cam_on();
     localStorage.setItem('name', '게스트');
     localStorage.setItem('age', 0);
-    console.log(ipcRenderer.sendSync('flask_call', 'age_gender',null));
+    localStorage.setItem('DB', false);
+    //console.log(ipcRenderer.sendSync('flask_call', 'age_gender',null));
     test();
 
 }
