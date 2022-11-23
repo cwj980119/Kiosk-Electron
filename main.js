@@ -43,11 +43,12 @@ ipcMain.on('flask_call', async (event, api_name, obj_name) => {
 
 })
 
-ipcMain.on('sign_up',async (event, name, pass, birth, gend, phone)=>{
+ipcMain.on('sign_up',async (event, pictures, name, pass, birth, gend, phone)=>{
   response = await new Promise((resolve, reject) => {
     const options = {
-      uri: process.env.FLASK + 'alldataset_model',
+      uri: process.env.FLASK + 'signup_dataset_model',
       qs:{
+        object_name: pictures,
         fullname: name,
         password: pass,
         birthday: birth,

@@ -156,6 +156,8 @@ function cnt_down(){
 }
 
 async function take_pic(){
+    var picture_arr = [];
+    test_num = train_num = 0;
     for(image_num = 0; image_num < 11; image_num++){
         over_frame.style.display = 'block';
         numb.style.display = 'block';
@@ -185,6 +187,7 @@ async function take_pic(){
                 train_num++;
             }
             filePath = await image_save(canvas)
+            picture_arr[image_num] = s3Path;
             ipcRenderer.send('api_call', filePath, s3Path, null)
             //over_frame.style.display = 'none'
         }
@@ -197,7 +200,7 @@ async function take_pic(){
     numb.textContent = '쵤영이 완료되었습니다'
     await wait(3);
     over_frame.style.display = 'none';
-    ipcRenderer.send('signup', fullname, password, birthday, gender, phonenumber);
+    ipcRenderer.send('signup', picture_arr ,fullname, password, birthday, gender, phonenumber);
 }
 
 function wait(sec){
