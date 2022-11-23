@@ -105,13 +105,8 @@ function set_name(p){
     document.getElementById('number3').innerText = p[3]['Date'];
 }
 
-function to_menu(i){
-    localStorage.setItem('name',p[i]['name'].substr(0,1) + '*' + p[i]['name'].substr(2));
-    age = 2022 - Number(p[i]['year']) +1;
-    localStorage.setItem('age',age);
-    localStorage.setItem('gender',p[i]['gender']);
-    localStorage.setItem('id',p[i]['id']);
-    localStorage.setItem('DB', true);
+async function to_menu(i){
+    await addFaceData(p[i]);
     location.href='../pages/menu.html';
 }
 
@@ -125,7 +120,7 @@ function search(){
     ol = document.getElementById("id-list");
     ol.innerHTML = '';
     if(numb.length == 4){
-        re = ipcRenderer.sendSync('DB_call', "select memberID, name, date_format(birthdate, '%m%d') as date, date_format(birthdate, '%Y') as year, gender, train, test from "+ user_table +" where phonenumber like '%" + numb +"' order by name")
+        re = ipcRenderer.sendSync('DB_call', "select memberID as id, name, date_format(birthdate, '%m%d') as date, date_format(birthdate, '%Y') as year, gender, train, test from "+ user_table +" where phonenumber like '%" + numb +"' order by name")
         cnt = re.length;
         if(cnt==0){
             new_name = document.createElement("div");
@@ -143,31 +138,35 @@ function search(){
             }
         }
     }
-    console.log('age = ' + Number(2022 - Number(re[0]['year'])))
 }
 
 async function addData(el){
     var element = el;
     idx = el.querySelector('.id-num').innerHTML;
-    if(re[idx]['train']/re[idx]['test'] > 3){
-        s3Path = 'signup/dataset/test/' + String(Number(re[idx]['memberID'])-1) + '/' + re[idx]['test'] +'.jpg';
+    await addFaceData(re[idx]);
+    location.href='../pages/menu.html';
+}
+
+async function addFaceData(target){
+    if(target['train']/target['test'] > 3){
+        s3Path = 'signup/dataset/test/' + String(Number(target['id'])-1) + '/' + target['test'] +'.jpg';
         console.log(s3Path);
         column = 'test';
     } 
     else{
-        s3Path = 'signup/dataset/train/' + String(Number(re[idx]['memberID'])-1) + '/' + re[idx]['train'] +'.jpg';
+        s3Path = 'signup/dataset/train/' + String(Number(target['id'])-1) + '/' + target['train'] +'.jpg';
         console.log(s3Path);
         column = 'train';
     }
-    age = 2022 - Number(re[idx]['year']) +1;
     filePath = await image_save(canvas);
     ipcRenderer.send('api_call', filePath, s3Path, 'addface');
-    ipcRenderer.sendSync('DB_call',"update "+user_table+" set " + column+" =  "+column+" +1 where memberID = "+String(Number(re[idx]['memberID'])))
-    localStorage.setItem('name', re[idx]['name'].substr(0,1) + '*' + re[idx]['name'].substr(2));
+    ipcRenderer.sendSync('DB_call',"update "+user_table+" set " + column+" =  "+column+" +1 where memberID = "+String(Number(target['id'])))
+    age = 2022 - Number(target['year']) +1;
+    localStorage.setItem('name', target['name'].substr(0,1) + '*' + target['name'].substr(2));
     localStorage.setItem('age', age);
-    localStorage.setItem('gender', re[idx]['gender']);
+    localStorage.setItem('gender', target['gender']);
+    localStorage.setItem('id', target['id']);
     localStorage.setItem('DB', true);
-    location.href='../pages/menu.html';
 }
 
 window.onload = function(){
