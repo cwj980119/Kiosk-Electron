@@ -43,25 +43,27 @@ ipcMain.on('flask_call', async (event, api_name, obj_name) => {
 
 })
 
-ipcMain.on('sign_up',async (event, pictures, name, pass, birth, gend, phone)=>{
+ipcMain.on('sign_up',async (event, pictures, id,name, pass, birth, gend, phone)=>{
   console.log('여기나옴')
-  response = await sign_up(pictures, name, pass, birth, gend, phone);
+  response = await sign_up(pictures, id, name, pass, birth, gend, phone);
 })
 
-function sign_up(pictures, name, pass, birth, gend, phone){
+function sign_up(pictures, id, name, pass, birth, gend, phone){
   return new Promise((resolve, reject) => {
     const options = {
       uri: process.env.FLASK + 'signup_dataset_model',
       qs:{
         object_name: pictures,
+        id: id,
         fullname: name,
-        password: pass,
         birthdate: birth,
         gender: gend,
-        phonenumber: phone
+        numb: phone,
+        password: pass,
             //page: loc
       }
     }
+    console.log(phone)
     request(options,function(err,reponse,body){
       if(err){
           reject(err)

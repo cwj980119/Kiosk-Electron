@@ -73,7 +73,7 @@ window.onload = async function(){
     document.getElementById("reco-drink").innerHTML = drinkdish['menuname']+"<br>"
     document.getElementById("reco-drink-price").innerHTML = drinkdish['price']
 
-    await wait(30);
+    await wait(300);
     location.href='../pages/initial.html';
 }
 

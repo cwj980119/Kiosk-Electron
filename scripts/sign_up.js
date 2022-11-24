@@ -14,6 +14,7 @@ var id = 9999; //중복 저장방지 큰 값
 var image_num;
 var train_num = 0;
 var test_num = 0;
+var genderer
 
 var video = null;
 var canvas = null;
@@ -53,17 +54,23 @@ window.onload = async function(){
         confirmpassword = document.getElementById('confirmpassword').value;
         birthday = document.getElementById('birthday').value;
         phonenumber = document.getElementById('phonenumber').value;
-        gender = document.getElementById('gender').value;
-        if(password == confirmpassword && password!=""){
-            console.log(document.getElementById('camname').innerText);
-            document.getElementById('camname').innerText = fullname +' 님';
-            document.querySelector('.upper-frame').style.transform = 'translate(0, -90vh)'
-            if(birthday == '') birthday = '2023';
-            cam_on();
+        gender = genderer;
+        console.log(fullname,password,birthday, gender,phonenumber);
+        if(fullname!="" && password!="" &&birthday!="" && phonenumber!="" && gender>0){
+            if(password == confirmpassword && password!=""){
+                console.log(document.getElementById('camname').innerText);
+                document.getElementById('camname').innerText = fullname +' 님';
+                document.querySelector('.upper-frame').style.transform = 'translate(0, -90vh)'
+                if(birthday == '') birthday = '2023';
+                cam_on();
+            }
+            else {
+                new Notification('비밀번호 확인', {body: '비밀번호가 일치하지 않습니다.'});
+                console.log('비밀번호가 일치하지 않습니다.')
+            }
         }
-        else {
-            new Notification('비밀번호 확인', {body: '비밀번호가 일치하지 않습니다.'});
-            console.log('비밀번호가 일치하지 않습니다.')
+        else{
+            new Notification('입력오류', {body: '모든 정보를 입력해주세요.'});
         }
     })
 
@@ -163,6 +170,7 @@ function cnt_down(){
 async function take_pic(){
     var picture_arr = [];
     test_num = train_num = 0;
+    A = phonenumber;
     for(image_num = 0; image_num < 11; image_num++){
         over_frame.style.display = 'block';
         numb.style.display = 'block';
@@ -205,7 +213,9 @@ async function take_pic(){
     numb.textContent = '쵤영이 완료되었습니다'
     await wait(3);
     over_frame.style.display = 'none';
-    ipcRenderer.send('sign_up', picture_arr ,fullname, password, birthday, gender, phonenumber);
+    console.log(phonenumber)
+    console.log(A)
+    ipcRenderer.send('sign_up', picture_arr ,id ,fullname, password, birthday, gender, phonenumber);
     localStorage.setItem('age',2023 - Number(birthday.substr(0,4)));
     localStorage.setItem('name', fullname.substr(0,1) + '*' + fullname.substr(2));
     localStorage.setItem('gender',gender);
