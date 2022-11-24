@@ -72,6 +72,9 @@ window.onload = async function(){
     document.getElementById("reco-drink-img").src = "../src/"+drinkdish['menuname']+".jpg"
     document.getElementById("reco-drink").innerHTML = drinkdish['menuname']+"<br>"
     document.getElementById("reco-drink-price").innerHTML = drinkdish['price']
+
+    await wait(3);
+    location.href='../pages/initial.html';
 }
 
 
