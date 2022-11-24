@@ -9,8 +9,11 @@ var db
 var drinkdish
 var maindish
 var sidedish
+var column
+var order_list
 
 window.onload = async function(){
+    order_list = [];
     document.getElementById('username').innerText = value +' 님 환영합니다!';
     if(age == 0){
         //total
@@ -142,6 +145,8 @@ function addMenuReco(main_name, price){
     new_menu = document.createElement("div");
     new_menu.innerHTML = '<div class="ordered-menu"> <div class="ordered-menu-name" id = "ordered-menu-name">'+main_name+'</div> <div class="ordered-menu-count">1</div> <div class="ordered-menu-price"><a class="price">'+price+'</a>원</div> <div class="ordered-menu-cancle" onclick="delete_menu(this.parentElement)">삭제</div> </div>'
     ol.appendChild(new_menu);
+    order_list[order_list.length] = main_name;
+    console.log(order_list)
     sum_price(price)
 }
 
@@ -150,6 +155,8 @@ function addMenu(menu, price){
     new_menu = document.createElement("div");
     new_menu.innerHTML = '<div class="ordered-menu"> <div class="ordered-menu-name" id = "ordered-menu-name">'+menu+'</div> <div class="ordered-menu-count">1</div> <div class="ordered-menu-price"><a class="price">'+price+'</a>원</div> <div class="ordered-menu-cancle" onclick="delete_menu(this.parentElement)">삭제</div> </div>'
     ol.appendChild(new_menu);
+    order_list[order_list.length] = menu;
+    console.log(order_list)
     sum_price(price)
 }
 
@@ -167,6 +174,14 @@ function minus_price(price){
 function delete_menu(el){
     var element = el;
     price = el.querySelector('.ordered-menu-price .price').innerHTML
+    me = el.querySelector('.ordered-menu-name').innerHTML;
+    for(let i = 0; i < order_list.length; i++) {
+        if(order_list[i] == me) {
+          order_list.splice(i, 1);
+          break;
+        }
+    }
+    console.log(order_list)
     minus_price(price);
     element.remove();
 }
